@@ -1,0 +1,191 @@
+<section class="projects" id="projects">
+  <div class="projects-container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">
+        Showcasing my recent work and technical expertise
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      <div
+        *ngFor="let project of projects; let i = index"
+        class="project-card"
+        [attr.data-index]="i"
+      >
+        <!-- Project Header -->
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- Full-Stack Icon -->
+            <svg
+              *ngIf="getProjectIcon(project.category) === 'fullstack'"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375 7.444 2.25 12 2.25s8.25 1.847 8.25 4.125zM12 12.75c4.556 0 8.25-1.847 8.25-4.125v-.878A2.25 2.25 0 0019.5 6h-.75c0 2.278-3.694 4.125-8.25 4.125S2.25 8.278 2.25 6H1.5a2.25 2.25 0 00-.75 1.747v.878c0 2.278 3.694 4.125 8.25 4.125z"
+              />
+              <path
+                d="M12 16.5c4.556 0 8.25-1.847 8.25-4.125v-.878A2.25 2.25 0 0019.5 10.5h-.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125H1.5a2.25 2.25 0 00-.75 1.747v.878c0 2.278 3.694 4.125 8.25 4.125z"
+              />
+            </svg>
+
+            <!-- Frontend Icon -->
+            <svg
+              *ngIf="getProjectIcon(project.category) === 'frontend'"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+              />
+            </svg>
+
+            <!-- Default Project Icon -->
+            <svg
+              *ngIf="getProjectIcon(project.category) === 'project'"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"
+                clip-rule="evenodd"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5V3z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+
+          <div class="project-meta">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <span class="project-category">{{ project.category }}</span>
+          </div>
+
+          <div class="project-status" [class]="'status-' + project.status">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="status-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Project Description -->
+        <div class="project-description">
+          <p>{{ project.description }}</p>
+        </div>
+
+        <!-- Project Highlights -->
+        <div class="project-highlights">
+          <h4 class="highlights-title">Key Features</h4>
+          <ul class="highlights-list">
+            <li
+              *ngFor="let highlight of project.highlights"
+              class="highlight-item"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="highlight-icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span>{{ highlight }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Technologies -->
+        <div class="project-technologies">
+          <h4 class="tech-title">Technologies</h4>
+          <div class="tech-stack">
+            <span
+              *ngFor="let tech of project.technologies"
+              class="tech-badge"
+              [style.--tech-color]="getTechColor(tech)"
+            >
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Project Actions -->
+        <!-- <div class="project-actions">
+          <button class="action-btn primary" (click)="viewProject(project)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="btn-icon"
+            >
+              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+              <path
+                fill-rule="evenodd"
+                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            View Details
+          </button>
+
+          <button class="action-btn secondary" (click)="viewCode(project)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="btn-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Source Code
+          </button>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- Projects Summary -->
+    <div class="projects-summary">
+      <div class="summary-stats">
+        <div class="stat-card">
+          <div class="stat-number">{{ projects.length }}</div>
+          <div class="stat-label">Featured Projects</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">{{ getAllTechnologies().length }}</div>
+          <div class="stat-label">Technologies Used</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,325 @@
+<section class="skills" id="skills">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">Technologies and tools I work with</p>
+
+        <!-- Interactive Controls -->
+        <div class="skills-controls mt-4">
+          <div class="control-group">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search skills..."
+              (input)="onSearchChange($event)"
+              [value]="searchTerm"
+            />
+
+            <div class="filter-buttons">
+              <button
+                class="filter-btn"
+                [class.active]="filterLevel === 'all'"
+                (click)="setFilter('all')"
+              >
+                All ({{ getTotalSkills() }})
+              </button>
+              <button
+                class="filter-btn expert"
+                [class.active]="filterLevel === 'expert'"
+                (click)="setFilter('expert')"
+              >
+                Expert ({{ getSkillsByLevel("expert") }})
+              </button>
+              <button
+                class="filter-btn advanced"
+                [class.active]="filterLevel === 'advanced'"
+                (click)="setFilter('advanced')"
+              >
+                Advanced ({{ getSkillsByLevel("advanced") }})
+              </button>
+              <button
+                class="filter-btn intermediate"
+                [class.active]="filterLevel === 'intermediate'"
+                (click)="setFilter('intermediate')"
+              >
+                Intermediate ({{ getSkillsByLevel("intermediate") }})
+              </button>
+            </div>
+
+            <button
+              class="comparison-btn"
+              [class.active]="isComparisonMode"
+              (click)="toggleComparisonMode()"
+            >
+              {{ isComparisonMode ? "Exit" : "Compare" }} Skills
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Panel -->
+    <div
+      class="comparison-panel"
+      *ngIf="isComparisonMode && comparedSkills.length > 0"
+    >
+      <h3>Skill Comparison</h3>
+      <div class="compared-skills">
+        <div
+          *ngFor="let skill of comparedSkills"
+          class="compared-skill"
+          [style.--skill-color]="
+            getProficiencyColor(getSkillProficiency(skill))
+          "
+        >
+          <div class="skill-header">
+            <span class="skill-name">{{ skill.name }}</span>
+            <span class="skill-category">{{ skill.category }}</span>
+            <button class="remove-btn" (click)="removeFromComparison(skill)">
+              ×
+            </button>
+          </div>
+          <div class="skill-bar">
+            <div
+              class="skill-fill"
+              [style.width]="getSkillProficiency(skill) + '%'"
+            ></div>
+          </div>
+          <span class="skill-percentage"
+            >{{ getSkillProficiency(skill) }}%</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Skills Categories -->
+    <div class="row g-4 mb-5">
+      <div
+        *ngFor="let category of getDisplayedCategories(); let i = index"
+        class="col-12 col-md-6 col-xl-4"
+      >
+        <div
+          class="skill-category h-100 interactive-category"
+          [class.visible]="category.isVisible"
+          [class.expanded]="category.isExpanded"
+          [class.selected]="selectedCategory === category"
+          [style.--category-color]="category.color"
+          [style.animation-delay]="i * 200 + 'ms'"
+          (click)="toggleCategory(category)"
+        >
+          <!-- Category Header -->
+          <div class="category-header">
+            <div class="category-icon">
+              <!-- Frontend Icon -->
+              <svg
+                *ngIf="category.icon === 'frontend'"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+                />
+              </svg>
+
+              <!-- Backend Icon -->
+              <svg
+                *ngIf="category.icon === 'backend'"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228H21.75zM9 12.75H6.75a.75.75 0 010-1.5H9a.75.75 0 010 1.5zm8.25 0H15a.75.75 0 010-1.5h2.25a.75.75 0 010 1.5z"
+                />
+              </svg>
+
+              <!-- Database Icon -->
+              <svg
+                *ngIf="category.icon === 'database'"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375 7.444 2.25 12 2.25s8.25 1.847 8.25 4.125zM12 12.75c4.556 0 8.25-1.847 8.25-4.125v-.878A2.25 2.25 0 0019.5 6h-.75c0 2.278-3.694 4.125-8.25 4.125S2.25 8.278 2.25 6H1.5a2.25 2.25 0 00-.75 1.747v.878c0 2.278 3.694 4.125 8.25 4.125zM12 16.5c4.556 0 8.25-1.847 8.25-4.125v-.878A2.25 2.25 0 0019.5 10.5h-.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125H1.5a2.25 2.25 0 00-.75 1.747v.878c0 2.278 3.694 4.125 8.25 4.125z"
+                />
+              </svg>
+
+              <!-- Cloud Icon -->
+              <svg
+                *ngIf="category.icon === 'cloud'"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.5 3.75a6 6 0 00-5.98 6.496A5.25 5.25 0 006.75 20.25H18a4.5 4.5 0 002.206-8.423 3.75 3.75 0 00-4.133-4.303A6.001 6.001 0 0010.5 3.75zm2.25 6a.75.75 0 00-1.5 0v4.94l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V9.75z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <!-- Tools Icon -->
+              <svg
+                *ngIf="category.icon === 'tools'"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 6.75a5.25 5.25 0 016.775-5.025.75.75 0 01.313 1.248l-3.32 3.319c.063.475.276.934.641 1.299.365.365.824.578 1.3.641l3.318-3.319a.75.75 0 011.248.313 5.25 5.25 0 01-5.472 6.756c-1.018-.086-1.87.1-2.309.634L7.344 21.3A3.298 3.298 0 112.7 16.657l8.684-7.151c.533-.44.72-1.291.634-2.309A5.342 5.342 0 0112 6.75zM4.117 19.125a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75h-.008a.75.75 0 01-.75-.75v-.008z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  d="m10.076 8.64-2.201-2.2V4.874a.75.75 0 00-.364-.643l-3.75-2.25a.75.75 0 00-.916.113l-.75.75a.75.75 0 00-.113.916l2.25 3.75a.75.75 0 00.643.364h1.564l2.062 2.062 1.575-1.297z"
+                />
+              </svg>
+            </div>
+
+            <h3 class="category-title">{{ category.title }}</h3>
+          </div>
+
+          <!-- Interactive Skills Tags -->
+          <div class="skills-tags" [class.expanded]="category.isExpanded">
+            <div
+              *ngFor="let skill of category.skills; let j = index"
+              class="skill-tag interactive-skill"
+              [class]="'skill-' + (skill.level || 'intermediate')"
+              [class.hovered]="skill.isHovered"
+              [class.in-comparison]="isInComparison(skill)"
+              [class.comparison-mode]="isComparisonMode"
+              [style.animation-delay]="j * 100 + 'ms'"
+              (mouseenter)="onSkillHover(skill, true)"
+              (mouseleave)="onSkillHover(skill, false)"
+              (click)="addToComparison(skill, category)"
+            >
+              <div class="skill-content gap-2">
+                <span class="skill-name">{{ skill.name }}</span>
+                <div class="skill-rating">
+                  <div
+                    class="star-rating"
+                    [title]="'Proficiency: ' + getSkillProficiency(skill) + '%'"
+                  >
+                    <span
+                      *ngFor="
+                        let filled of getStarArray(
+                          getStarRating(getSkillProficiency(skill))
+                        );
+                        let i = index
+                      "
+                      class="star"
+                      [class.filled]="filled"
+                    >
+                      ★
+                    </span>
+                  </div>
+                  <!-- <span class="skill-proficiency"
+                    >{{ getSkillProficiency(skill) }}%</span
+                  > -->
+                </div>
+              </div>
+
+              <!-- Mini Progress Bar -->
+              <div class="mini-progress">
+                <div
+                  class="mini-progress-bar"
+                  [style.width]="getSkillProficiency(skill) + '%'"
+                  [style.background-color]="
+                    getProficiencyColor(getSkillProficiency(skill))
+                  "
+                ></div>
+              </div>
+
+              <div class="skill-level-indicator" *ngIf="skill.level">
+                <div class="level-dots">
+                  <div
+                    class="dot"
+                    [class.active]="getLevelValue(skill.level) >= 1"
+                  ></div>
+                  <div
+                    class="dot"
+                    [class.active]="getLevelValue(skill.level) >= 2"
+                  ></div>
+                  <div
+                    class="dot"
+                    [class.active]="getLevelValue(skill.level) >= 3"
+                  ></div>
+                  <div
+                    class="dot"
+                    [class.active]="getLevelValue(skill.level) >= 4"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Summary -->
+    <div class="row">
+      <div class="col-12">
+        <div class="skills-summary">
+          <div class="summary-card">
+            <h3 class="summary-title text-center mb-4">Expertise Overview</h3>
+            <div class="row g-4 text-center">
+              <div class="col-12 col-md-3">
+                <div class="stat-item">
+                  <span class="stat-number d-block">{{
+                    getTotalSkills()
+                  }}</span>
+                  <span class="stat-label">Technologies</span>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="stat-item">
+                  <span class="stat-number d-block">{{
+                    skillCategories.length
+                  }}</span>
+                  <span class="stat-label">Categories</span>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="stat-item">
+                  <span class="stat-number d-block"
+                    >{{ getAverageProficiency() }}%</span
+                  >
+                  <span class="stat-label">Avg Proficiency</span>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="stat-item">
+                  <span class="stat-number d-block">4+</span>
+                  <span class="stat-label">Years Experience</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Star Rating Legend -->
+            <div class="row mt-3">
+              <div class="col-12 text-center">
+                <div class="star-legend">
+                  <small class="legend-text">
+                    <span class="legend-item">
+                      <span class="star filled">★★★★★</span> Expert (90%+)
+                    </span>
+                    <span class="legend-item">
+                      <span class="star filled">★★★★</span>☆ Advanced (80%+)
+                    </span>
+                    <span class="legend-item">
+                      <span class="star filled">★★★</span>☆☆ Intermediate (70%+)
+                    </span>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

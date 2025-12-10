@@ -1,0 +1,259 @@
+<section class="about" id="about" [class.scrolled]="isScrolled">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">Get to know me better</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-4">
+      <!-- About Text -->
+      <div class="col-12 col-lg-6">
+        <div class="intro-card h-100">
+          <!-- Interactive Stats -->
+          <div class="stats-grid mb-4">
+            <div
+              *ngFor="let stat of stats; let i = index"
+              class="stat-item"
+              [style.animation-delay]="i * 200 + 'ms'"
+            >
+              <div class="stat-number">
+                {{ stat.animatedValue }}{{ stat.suffix }}
+              </div>
+              <div class="stat-label">{{ stat.label }}</div>
+            </div>
+          </div>
+
+          <div class="about-description">
+            <p class="fade-in-text" [style.animation-delay]="'0.5s'">
+              I am a <strong>full-stack developer</strong> with
+              {{ experience }} years of experience specializing in modern web
+              technologies. I'm passionate about creating
+              <strong>secure, scalable, and user-friendly applications</strong>
+              that make a real impact.
+            </p>
+
+            <p class="fade-in-text" [style.animation-delay]="'0.8s'">
+              Working in <strong>Agile/Scrum environments</strong>, I
+              collaborate closely with clients and cross-functional teams to
+              deliver high-quality solutions. My focus is always on writing
+              <strong>clean, maintainable code</strong> that stands the test of
+              time.
+            </p>
+
+            <p class="fade-in-text" [style.animation-delay]="'1.1s'">
+              I believe in continuous learning and staying up-to-date with the
+              latest technologies to provide the best solutions for every
+              project.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills & Highlights -->
+      <div class="col-12 col-lg-6">
+        <div class="about-details h-100">
+          <!-- Interactive Technical Skills -->
+          <div class="skills-section mb-3">
+            <h3 class="subsection-title">Technical Expertise</h3>
+            <div class="interactive-skills">
+              <div
+                *ngFor="let skill of skills; let i = index"
+                class="interactive-skill-item"
+                [class.animated]="skill.isAnimated"
+                [class.selected]="selectedSkill === skill"
+                (mouseenter)="onSkillHover(skill)"
+                (mouseleave)="onSkillLeave()"
+                (click)="toggleSkillDetails(skill)"
+                [style.animation-delay]="i * 150 + 'ms'"
+              >
+                <div class="skill-header">
+                  <div
+                    class="skill-icon"
+                    [style.color]="getSkillColor(skill.proficiency)"
+                  >
+                    <!-- Angular Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'angular'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 2L2 7v10c0 5.55 3.84 9.739 9 11 5.16-1.261 9-5.45 9-11V7l-10-5z"
+                      />
+                    </svg>
+
+                    <!-- .NET Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'dotnet'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M3 3h18v18H3V3zm16 16V5H5v14h14z" />
+                      <path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z" />
+                    </svg>
+
+                    <!-- Cloud Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'cloud'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"
+                      />
+                    </svg>
+
+                    <!-- Database Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'database'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4zM4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4zm0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4z"
+                      />
+                    </svg>
+
+                    <!-- Microservices Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'microservices'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"
+                      />
+                    </svg>
+
+                    <!-- CI/CD Icon -->
+                    <svg
+                      *ngIf="skill.icon === 'cicd'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="skill-info">
+                    <span class="skill-name">{{ skill.name }}</span>
+                    <span class="skill-percentage"
+                      >{{ skill.proficiency }}%</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Animated Progress Bar -->
+                <div class="skill-progress">
+                  <div
+                    class="progress-bar"
+                    [class.animate]="skill.isAnimated"
+                    [style.width]="
+                      skill.isAnimated ? skill.proficiency + '%' : '0%'
+                    "
+                    [style.background-color]="getSkillColor(skill.proficiency)"
+                  ></div>
+                </div>
+
+                <!-- Skill Details Tooltip -->
+                <div class="skill-tooltip" *ngIf="selectedSkill === skill">
+                  <div class="tooltip-content">
+                    <h4>{{ skill.name }}</h4>
+                    <p>{{ getSkillDescription(skill) }}</p>
+                    <div class="skill-projects">
+                      <span
+                        >Used in {{ getSkillProjects(skill) }} projects</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Key Highlights -->
+          <div class="highlights-section">
+            <h3 class="subsection-title">What I Bring</h3>
+            <div class="highlights-grid">
+              <div
+                *ngFor="let highlight of highlights; let i = index"
+                class="highlight-item mb-1"
+                [class.visible]="highlight.isVisible"
+                [style.animation-delay]="i * 200 + 'ms'"
+              >
+                <div class="highlight-icon">
+                  <!-- Shield Icon -->
+                  <svg
+                    *ngIf="highlight.icon === 'shield'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.1 16,12.7V16.2C16,16.8 15.4,17.3 14.8,17.3H9.2C8.6,17.3 8,16.8 8,16.2V12.7C8,12.1 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"
+                    />
+                  </svg>
+
+                  <!-- User Icon -->
+                  <svg
+                    *ngIf="highlight.icon === 'user'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    />
+                  </svg>
+
+                  <!-- Agile Icon -->
+                  <svg
+                    *ngIf="highlight.icon === 'agile'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+
+                  <!-- Code Icon -->
+                  <svg
+                    *ngIf="highlight.icon === 'code'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"
+                    />
+                  </svg>
+                </div>
+
+                <div class="highlight-content">
+                  <h4 class="highlight-title">{{ highlight.title }}</h4>
+                  <p class="highlight-description">
+                    {{ highlight.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
